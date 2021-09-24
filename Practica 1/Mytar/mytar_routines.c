@@ -17,17 +17,17 @@ extern char *use;
 int
 copynFile(FILE * origin, FILE * destination, int nBytes)
 {
-	int character = 0, copiedBytes = 0;
+    int character = 0, copiedBytes = 0;
 
     if(origin == NULL || destination == NULL)
         return -1;
 
-    while((character = getc(origin)) != EOF && (copiedBytes < nBytes)) {
+    while((copiedBytes < nBytes) && (character = getc(origin)) != EOF ) {
         putc(character, destination);
         copiedBytes++;
     }
-
-	return copiedBytes;
+    
+    return copiedBytes;
 }
 
 /** Loads a string from a file.
@@ -45,15 +45,29 @@ char*
 loadstr(FILE * file)
 {
 	char *buffer = NULL;
-    int i = 0, character;
+    int i = 0, character, size = 0;
+    long currentFilePosition;
 
     if(file == NULL)
         return NULL;
+    
+    // We check how many memory we need to allocate
+    currentFilePosition = ftell(file);
 
-    buffer = (char *) malloc(PATH_MAX * sizeof(char));
-
-    if(buffer == NULL)
+    do {
+        character = getc(file);
+        size++;
+    } while ((character != EOF) && (character != '\0'));
+    
+    if(fseek(file, currentFilePosition, SEEK_SET) != 0)
         return NULL;
+
+    buffer = (char *) malloc(size * sizeof(char));
+
+    if(buffer == NULL) {
+        fprintf(stderr, "Allocation memory error!");
+        return NULL;
+    }
 
     do {
         character = getc(file);
@@ -188,13 +202,8 @@ createTar(int nFiles, char *fileNames[], char tarName[])
     }
 
     // Store header into the tar's file
-    if(fseek(tarFile, 0, SEEK_SET) != 0) {
-        for(int i = 0; i < nFiles; i++) {
-            free(header);
-        }
-        fclose(tarFile);
-        return EXIT_FAILURE;
-    }
+    if(fseek(tarFile, 0, SEEK_SET) != 0)
+        goto error_path;
 
     fwrite(&nFiles, sizeof(int), 1, tarFile);
 
@@ -214,6 +223,12 @@ createTar(int nFiles, char *fileNames[], char tarName[])
     fclose(tarFile);
 
 	return EXIT_SUCCESS;
+
+    error_path:
+        for(int i = 0; i < nFiles; i++)
+            free(header);
+        fclose(tarFile);
+        return EXIT_FAILURE;
 }
 
 /** Extract files stored in a tarball archive
@@ -268,6 +283,7 @@ extractTar(char tarName[])
             return EXIT_FAILURE;
         }
 
+        fprintf(stdout, "\"%s\" file extracted successfuly from \"%s\"!\n", header[i].name, tarName);
         fclose(outputFile);
     }
 
