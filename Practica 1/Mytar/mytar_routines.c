@@ -75,7 +75,7 @@ loadstr(FILE * file) {
 
     buffer[i] = '\0';
 
-	return buffer;
+    return buffer;
 }
 
 /** Read tarball header and store it in memory.
@@ -112,7 +112,7 @@ readHeader(FILE * tarFile, int *nFiles) {
             goto error_asign;
     }
 
-	return headers;
+    return headers;
 
 error_asign:
     for(int j = 0; j < i; j++)
@@ -157,8 +157,10 @@ createTar(int nFiles, char *fileNames[], char tarName[]) {
     
     tarFile = fopen(tarName, "w");
 
-    if(tarFile == NULL)
+    if(tarFile == NULL) {
+        fprintf(stderr, "Failed to open \"%s\" file!\n", tarName);
         goto error_path;
+    }
 
     for(i = 0; i < nFiles; i++) {
         header[i].name = (char *) malloc(strlen(fileNames[i]) + 1);
@@ -210,7 +212,7 @@ createTar(int nFiles, char *fileNames[], char tarName[]) {
     free(header);
     fclose(tarFile);
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 
 error_path:
     for(int i = 0; i < nFiles; i++)
