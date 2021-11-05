@@ -1,0 +1,462 @@
+.TH "src/myFS.c" 3 "Fri Nov 5 2021" "Version 1.0" "FUSE_myFS" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/myFS.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'myFS\&.h'\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBcopyNode\fP (\fBNodeStruct\fP *dest, \fBNodeStruct\fP *src)"
+.br
+.RI "Copies the content from one node to another\&. "
+.ti -1c
+.RI "int \fBfindFileByName\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP, char *fileName)"
+.br
+.RI "Looks for the index a file has in the directory\&. "
+.ti -1c
+.RI "int \fBfindFreeFile\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP)"
+.br
+.RI "This function looks for a free entry in the array of files\&. "
+.ti -1c
+.RI "int \fBfindFreeNode\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP)"
+.br
+.RI "Looks for an available node\&. "
+.ti -1c
+.RI "int \fBfindNodeByPos\fP (int nodeNum)"
+.br
+.RI "Computes the position (byte) of a given inode in the backup file\&. "
+.ti -1c
+.RI "int \fBinitializeNodes\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP)"
+.br
+.RI "It reads the inodes from disk and store them in new structures myFileSystem->nodes[i]\&. "
+.ti -1c
+.RI "void \fBinitializeSuperBlock\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP, int diskSize)"
+.br
+.RI "Initializes the super block\&. "
+.ti -1c
+.RI "void \fBmyFree\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP)"
+.br
+.RI "Free all the memory linked to the current FS\&. "
+.ti -1c
+.RI "int \fBmyMkfs\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP, int diskSize, char *backupFileName)"
+.br
+.RI "Formats the current disk\&. Saves all the bitmap, super block and the directory\&. "
+.ti -1c
+.RI "int \fBmyQuota\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP)"
+.br
+.RI "Returns the number of free blocks in the FS, checking the bitmap\&. "
+.ti -1c
+.RI "int \fBreadNode\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP, int nodeNum, \fBNodeStruct\fP *node)"
+.br
+.RI "Reads an inode from the backup file\&. "
+.ti -1c
+.RI "int \fBreserveBlocksForNodes\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP, \fBDISK_LBA\fP blocks[], int numBlocks)"
+.br
+.RI "This function looks for empty blocks in the bitmap, reserving them\&. "
+.ti -1c
+.RI "int \fBupdateBitmap\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP)"
+.br
+.RI "Writes all the information of the bitmap into the backup file\&. "
+.ti -1c
+.RI "int \fBupdateDirectory\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP)"
+.br
+.RI "Writes the informatin of the directory into the backup file\&. "
+.ti -1c
+.RI "int \fBupdateNode\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP, int numNode, \fBNodeStruct\fP *node)"
+.br
+.RI "Writes all the information of an inode into the backup file\&. "
+.ti -1c
+.RI "int \fBupdateSuperBlock\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP)"
+.br
+.RI "Writes all the information of the superblock in the backup file\&. "
+.ti -1c
+.RI "int \fBreadBitmap\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP)"
+.br
+.ti -1c
+.RI "int \fBreadDirectory\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP)"
+.br
+.ti -1c
+.RI "int \fBreadSuperblock\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP)"
+.br
+.ti -1c
+.RI "int \fBreadInodes\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP)"
+.br
+.ti -1c
+.RI "int \fBmyMount\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP, char *backupFileName)"
+.br
+.RI "Mounts the current disk\&. (Optional part of the lab assignment) "
+.ti -1c
+.RI "int \fBreadBlock\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP, \fBDISK_LBA\fP blockNumber, void *buffer)"
+.br
+.RI "Reads numBlock from storage into buffer\&. "
+.ti -1c
+.RI "int \fBwriteBlock\fP (\fBMyFileSystem\fP *\fBmyFileSystem\fP, \fBDISK_LBA\fP blockNumber, void *buffer)"
+.br
+.RI "Writes buffer data into numBlock storage block\&. "
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void copyNode (\fBNodeStruct\fP * dest, \fBNodeStruct\fP * src)"
+
+.PP
+Copies the content from one node to another\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdest\fP destination node 
+.br
+\fIsrc\fP source node 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void 
+.RE
+.PP
+
+.SS "int findFileByName (\fBMyFileSystem\fP * myFileSystem, char * fileName)"
+
+.PP
+Looks for the index a file has in the directory\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.br
+\fIfileName\fP name of the file we are looking for 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+index of the file in the array of files, -1 if the file is not found 
+.RE
+.PP
+
+.SS "int findFreeFile (\fBMyFileSystem\fP * myFileSystem)"
+
+.PP
+This function looks for a free entry in the array of files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+index of a free entry in the array of files, -1 if it does not exist 
+.RE
+.PP
+
+.SS "int findFreeNode (\fBMyFileSystem\fP * myFileSystem)"
+
+.PP
+Looks for an available node\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+number of a free inode, -1 if not able to find one 
+.RE
+.PP
+
+.SS "int findNodeByPos (int nodeNum)"
+
+.PP
+Computes the position (byte) of a given inode in the backup file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIinodeNum\fP given inode (is position in the backup file) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+the offset, or the starting position of the given inode 
+.RE
+.PP
+
+.SS "int initializeNodes (\fBMyFileSystem\fP * myFileSystem)"
+
+.PP
+It reads the inodes from disk and store them in new structures myFileSystem->nodes[i]\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+0 on success and <0 on error 
+.RE
+.PP
+
+.SS "void initializeSuperBlock (\fBMyFileSystem\fP * myFileSystem, int diskSize)"
+
+.PP
+Initializes the super block\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.br
+\fIdiskSize\fP size of the backup file for the FS 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void 
+.RE
+.PP
+
+.SS "void myFree (\fBMyFileSystem\fP * myFileSystem)"
+
+.PP
+Free all the memory linked to the current FS\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void 
+.RE
+.PP
+
+.SS "int myMkfs (\fBMyFileSystem\fP * myFileSystem, int diskSize, char * backupFileName)"
+
+.PP
+Formats the current disk\&. Saves all the bitmap, super block and the directory\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.br
+\fIdiskSize\fP size of the disk we are creating 
+.br
+\fIbackupFileName\fP Name of the file that will store the FS 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+0 on success and <0 on error 
+.RE
+.PP
+
+.SS "int myMount (\fBMyFileSystem\fP * myFileSystem, char * backupFileName)"
+
+.PP
+Mounts the current disk\&. (Optional part of the lab assignment) 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.br
+\fIbackupFileName\fP Name of the file that stores the FS 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+0 on success and <0 on error 
+.RE
+.PP
+
+.SS "int myQuota (\fBMyFileSystem\fP * myFileSystem)"
+
+.PP
+Returns the number of free blocks in the FS, checking the bitmap\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+number of free blocks 
+.RE
+.PP
+
+.SS "int readBitmap (\fBMyFileSystem\fP * myFileSystem)"
+TODO: Code for the optional part of the lab assignment 
+.SS "int readBlock (\fBMyFileSystem\fP * myFileSystem, \fBDISK_LBA\fP blockNumber, void * buffer)"
+
+.PP
+Reads numBlock from storage into buffer\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.br
+\fIblockNumber\fP block to be read 
+.br
+\fIbuffer\fP with space for block data 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+0 on success and -1 on error 
+.RE
+.PP
+
+.SS "int readDirectory (\fBMyFileSystem\fP * myFileSystem)"
+TODO: Code for the optional part of the lab assignment 
+.SS "int readInodes (\fBMyFileSystem\fP * myFileSystem)"
+TODO: Code for the optional part of the lab assignment 
+.SS "int readNode (\fBMyFileSystem\fP * myFileSystem, int nodeNum, \fBNodeStruct\fP * node)"
+
+.PP
+Reads an inode from the backup file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.br
+\fInodeNum\fP inode number (position in backup file) 
+.br
+\fInode\fP inode structure that will contain the information read from the backup file 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+0 on success and -1 on error 
+.RE
+.PP
+
+.SS "int readSuperblock (\fBMyFileSystem\fP * myFileSystem)"
+TODO: Code for the optional part of the lab assignment 
+.SS "int reserveBlocksForNodes (\fBMyFileSystem\fP * myFileSystem, \fBDISK_LBA\fP blockIdxs[], int numBlocks)"
+
+.PP
+This function looks for empty blocks in the bitmap, reserving them\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.br
+\fIblockIdxs\fP array of blocks reserved by an inode (initially empty) 
+.br
+\fInumBlocks\fP number of blocks we want to reserve 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+0 on success and -1 on error 
+.RE
+.PP
+
+.SS "int updateBitmap (\fBMyFileSystem\fP * myFileSystem)"
+
+.PP
+Writes all the information of the bitmap into the backup file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+0 on success and <0 on error 
+.RE
+.PP
+
+.SS "int updateDirectory (\fBMyFileSystem\fP * myFileSystem)"
+
+.PP
+Writes the informatin of the directory into the backup file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 
+.RE
+.PP
+
+.SS "int updateNode (\fBMyFileSystem\fP * myFileSystem, int nodeNum, \fBNodeStruct\fP * node)"
+
+.PP
+Writes all the information of an inode into the backup file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.br
+\fIinodeNum\fP inode number 
+.br
+\fIinode\fP structure of the inode to write (it does not have to match with myFileSystem\&.inodes[inodeIdx]) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+0 on success and <0 on error 
+.RE
+.PP
+
+.SS "int updateSuperBlock (\fBMyFileSystem\fP * myFileSystem)"
+
+.PP
+Writes all the information of the superblock in the backup file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+0 on success and <0 on error 
+.RE
+.PP
+
+.SS "int writeBlock (\fBMyFileSystem\fP * myFileSystem, \fBDISK_LBA\fP blockNumber, void * buffer)"
+
+.PP
+Writes buffer data into numBlock storage block\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImyFileSystem\fP pointer to the FS 
+.br
+\fIblockNumber\fP storage block number 
+.br
+\fIbuffer\fP data to be written 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+0 on success and -1 on error 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for FUSE_myFS from the source code\&.

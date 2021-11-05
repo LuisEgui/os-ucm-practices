@@ -1,0 +1,45 @@
+.TH "NodeStructure" 3 "Fri Nov 5 2021" "Version 1.0" "FUSE_myFS" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+NodeStructure
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <myFS\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "int \fBnumBlocks\fP"
+.br
+.ti -1c
+.RI "int \fBfileSize\fP"
+.br
+.ti -1c
+.RI "time_t \fBmodificationTime\fP"
+.br
+.ti -1c
+.RI "\fBDISK_LBA\fP \fBblocks\fP [\fBMAX_BLOCKS_PER_FILE\fP]"
+.br
+.ti -1c
+.RI "\fBBOOLEAN\fP \fBfreeNode\fP"
+.br
+.in -1c
+.SH "Field Documentation"
+.PP 
+.SS "\fBDISK_LBA\fP blocks[\fBMAX_BLOCKS_PER_FILE\fP]"
+
+.SS "int fileSize"
+
+.SS "\fBBOOLEAN\fP freeNode"
+
+.SS "time_t modificationTime"
+
+.SS "int numBlocks"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for FUSE_myFS from the source code\&.

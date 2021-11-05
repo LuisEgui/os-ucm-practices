@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['main_35',['main',['../_my_file_system_8c.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'MyFileSystem.c']]],
+  ['max_5fblocks_5fper_5ffile_36',['MAX_BLOCKS_PER_FILE',['../my_f_s_8h.html#a2a0e8f43a6efbb1e4f2bc2c11d52a846',1,'myFS.h']]],
+  ['max_5fblocks_5fwith_5fnodes_37',['MAX_BLOCKS_WITH_NODES',['../my_f_s_8h.html#a9f9ad92b95f87e4f994aea35f653c800',1,'myFS.h']]],
+  ['max_5ffiles_5fper_5fdirectory_38',['MAX_FILES_PER_DIRECTORY',['../my_f_s_8h.html#a2bc4e225dec7c776a1ff388f7349ed0e',1,'myFS.h']]],
+  ['max_5ffuse_5fnargs_39',['MAX_FUSE_NARGS',['../fuse_lib_8h.html#a9a5963a2e02053c7eb04ee5e5ff1e754',1,'fuseLib.h']]],
+  ['max_5flen_5ffile_5fname_40',['MAX_LEN_FILE_NAME',['../my_f_s_8h.html#a1ecd8cf6fbe2433b7ff4c0506dd6e46f',1,'myFS.h']]],
+  ['max_5fnodes_41',['MAX_NODES',['../my_f_s_8h.html#abd2aacdca9cb2a1a30f3392256b96ea3',1,'myFS.h']]],
+  ['maxblocksperfile_42',['maxBlocksPerFile',['../struct_super_block_structure.html#aeeab84ad4be89866372baa2bf59954ce',1,'SuperBlockStructure']]],
+  ['maxlenfilename_43',['maxLenFileName',['../struct_super_block_structure.html#a7c91e7445ed8f596a899627d124fc7b8',1,'SuperBlockStructure']]],
+  ['mode_5fstring_44',['mode_string',['../fuse_lib_8c.html#a6c4f76c9385bff8c51e8c477b33ab05d',1,'fuseLib.c']]],
+  ['modificationtime_45',['modificationTime',['../struct_node_structure.html#ae96dfdffa32716bb47703f73475a758c',1,'NodeStructure']]],
+  ['myfilesystem_46',['MyFileSystem',['../my_f_s_8h.html#a2291661477fb907ab8419570cd8ba0c1',1,'myFS.h']]],
+  ['myfilesystem_47',['myFileSystem',['../_my_file_system_8c.html#a99030ca09ca9124c081534d68189e35d',1,'myFileSystem():&#160;MyFileSystem.c'],['../fuse_lib_8h.html#a99030ca09ca9124c081534d68189e35d',1,'myFileSystem():&#160;MyFileSystem.c']]],
+  ['myfilesystem_2ec_48',['MyFileSystem.c',['../_my_file_system_8c.html',1,'']]],
+  ['myfilesystemstructure_49',['MyFileSystemStructure',['../struct_my_file_system_structure.html',1,'']]],
+  ['myfree_50',['myFree',['../my_f_s_8c.html#a5033dc444a0b5ee35a266c27e3be61b1',1,'myFree(MyFileSystem *myFileSystem):&#160;myFS.c'],['../my_f_s_8h.html#a5033dc444a0b5ee35a266c27e3be61b1',1,'myFree(MyFileSystem *myFileSystem):&#160;myFS.c']]],
+  ['myfs_2ec_51',['myFS.c',['../my_f_s_8c.html',1,'']]],
+  ['myfs_2eh_52',['myFS.h',['../my_f_s_8h.html',1,'']]],
+  ['myfs_5foperations_53',['myFS_operations',['../fuse_lib_8c.html#aea82bbbb4e842e5a13dcdba6a47c30a6',1,'myFS_operations():&#160;fuseLib.c'],['../fuse_lib_8h.html#aea82bbbb4e842e5a13dcdba6a47c30a6',1,'myFS_operations():&#160;fuseLib.c']]],
+  ['mymkfs_54',['myMkfs',['../my_f_s_8c.html#abec067f366fe2fae1a42695546914bd7',1,'myMkfs(MyFileSystem *myFileSystem, int diskSize, char *backupFileName):&#160;myFS.c'],['../my_f_s_8h.html#abec067f366fe2fae1a42695546914bd7',1,'myMkfs(MyFileSystem *myFileSystem, int diskSize, char *backupFileName):&#160;myFS.c']]],
+  ['mymount_55',['myMount',['../my_f_s_8c.html#a138eedf7627a42cd2647f2ccf8ccbe7e',1,'myMount(MyFileSystem *myFileSystem, char *backupFileName):&#160;myFS.c'],['../my_f_s_8h.html#a138eedf7627a42cd2647f2ccf8ccbe7e',1,'myMount(MyFileSystem *myFileSystem, char *backupFileName):&#160;myFS.c']]],
+  ['myquota_56',['myQuota',['../my_f_s_8c.html#a981ed4427450f34422ee1448f9b12084',1,'myQuota(MyFileSystem *myFileSystem):&#160;myFS.c'],['../my_f_s_8h.html#a981ed4427450f34422ee1448f9b12084',1,'myQuota(MyFileSystem *myFileSystem):&#160;myFS.c']]]
+];

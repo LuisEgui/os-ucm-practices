@@ -1,0 +1,10 @@
+digraph "initializeSuperBlock"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="initializeSuperBlock",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Initializes the super block."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="myQuota",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a981ed4427450f34422ee1448f9b12084",tooltip="Returns the number of free blocks in the FS, checking the bitmap."];
+}

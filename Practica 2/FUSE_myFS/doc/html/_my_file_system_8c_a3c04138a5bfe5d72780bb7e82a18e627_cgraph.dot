@@ -1,0 +1,45 @@
+digraph "main"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="main",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="myFree",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a5033dc444a0b5ee35a266c27e3be61b1",tooltip="Free all the memory linked to the current FS."];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="myMkfs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#abec067f366fe2fae1a42695546914bd7",tooltip="Formats the current disk. Saves all the bitmap, super block and the directory."];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="initializeNodes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a4a09fe4cf4a69374029484d028f2966e",tooltip="It reads the inodes from disk and store them in new structures myFileSystem->nodes[i]."];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="copyNode",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a80c2e58d7f693928a6139661060bbc9c",tooltip="Copies the content from one node to another."];
+  Node4 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="readNode",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a352c4e7c2fb4b77d575fb5c973facebf",tooltip="Reads an inode from the backup file."];
+  Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="findNodeByPos",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#ac7f7d46f16a740cc34ee97732a3c2ce0",tooltip="Computes the position (byte) of a given inode in the backup file."];
+  Node3 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="initializeSuperBlock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#ab86389a5d5bd4f3e141b2e0eb5eb89d8",tooltip="Initializes the super block."];
+  Node8 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="myQuota",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a981ed4427450f34422ee1448f9b12084",tooltip="Returns the number of free blocks in the FS, checking the bitmap."];
+  Node3 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="updateBitmap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#ac7899d11630e97fd773d8c4a4bb6a234",tooltip="Writes all the information of the bitmap into the backup file."];
+  Node3 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="updateDirectory",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a2c1016088ca1cbf39b59dbc60be0d77a",tooltip="Writes the informatin of the directory into the backup file."];
+  Node3 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="updateNode",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a4b883c310e0116621ee5c38720cb9c20",tooltip="Writes all the information of an inode into the backup file."];
+  Node12 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="updateSuperBlock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a43942168c8950c2229109ecb1f87bd68",tooltip="Writes all the information of the superblock in the backup file."];
+  Node1 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="myMount",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a138eedf7627a42cd2647f2ccf8ccbe7e",tooltip="Mounts the current disk. (Optional part of the lab assignment)"];
+  Node14 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="readBitmap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a8cb14727ad48d13f0dc5ab60e75cb6d8",tooltip=" "];
+  Node14 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="readDirectory",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a8d06fd036d56c448ebd1aac93b9af171",tooltip=" "];
+  Node14 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="readInodes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a27ee348754bf2789ff48d650567388ff",tooltip=" "];
+  Node14 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="readSuperblock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#aebd6de172662b11c0999cfa97f3c5e1c",tooltip=" "];
+}

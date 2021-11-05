@@ -1,0 +1,35 @@
+.TH "FileStructure" 3 "Fri Nov 5 2021" "Version 1.0" "FUSE_myFS" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+FileStructure
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <myFS\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "int \fBnodeIdx\fP"
+.br
+.ti -1c
+.RI "char \fBfileName\fP [\fBMAX_LEN_FILE_NAME\fP+1]"
+.br
+.ti -1c
+.RI "\fBBOOLEAN\fP \fBfreeFile\fP"
+.br
+.in -1c
+.SH "Field Documentation"
+.PP 
+.SS "char fileName[\fBMAX_LEN_FILE_NAME\fP+1]"
+
+.SS "\fBBOOLEAN\fP freeFile"
+
+.SS "int nodeIdx"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for FUSE_myFS from the source code\&.

@@ -1,0 +1,63 @@
+.TH "src/MyFileSystem.c" 3 "Fri Nov 5 2021" "Version 1.0" "FUSE_myFS" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/MyFileSystem.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'fuseLib\&.h'\fP
+.br
+\fC#include 'myFS\&.h'\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBUSAGE\fP   'Usage: %s \-t diskSize \-a backupFileName \-f 'fuse options'\\n'"
+.br
+.ti -1c
+.RI "#define \fBEXAMPLE\fP   'Example:\\n%s \-t 2097152 \-a virtual\-disk \-f '\-d \-s mount\-point'\\n'"
+.br
+.ti -1c
+.RI "#define \fBEXAMPLE2\fP   'Example:\\n%s \-m \-a <virtual\-disk> \-f '\-d \-s mount\-point'\\n'"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBMyFileSystem\fP \fBmyFileSystem\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define EXAMPLE   'Example:\\n%s \-t 2097152 \-a virtual\-disk \-f '\-d \-s mount\-point'\\n'"
+
+.SS "#define EXAMPLE2   'Example:\\n%s \-m \-a <virtual\-disk> \-f '\-d \-s mount\-point'\\n'"
+
+.SS "#define USAGE   'Usage: %s \-t diskSize \-a backupFileName \-f 'fuse options'\\n'"
+
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.SH "Variable Documentation"
+.PP 
+.SS "\fBMyFileSystem\fP myFileSystem"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for FUSE_myFS from the source code\&.

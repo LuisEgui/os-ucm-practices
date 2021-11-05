@@ -1,0 +1,10 @@
+digraph "readNode"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="readNode",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Reads an inode from the backup file."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="findNodeByPos",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#ac7f7d46f16a740cc34ee97732a3c2ce0",tooltip="Computes the position (byte) of a given inode in the backup file."];
+}

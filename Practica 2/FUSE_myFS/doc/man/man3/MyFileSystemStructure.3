@@ -1,0 +1,50 @@
+.TH "MyFileSystemStructure" 3 "Fri Nov 5 2021" "Version 1.0" "FUSE_myFS" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+MyFileSystemStructure
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <myFS\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "int \fBfdVirtualDisk\fP"
+.br
+.ti -1c
+.RI "\fBSuperBlockStruct\fP \fBsuperBlock\fP"
+.br
+.ti -1c
+.RI "\fBBIT\fP \fBbitMap\fP [\fBNUM_BITS\fP]"
+.br
+.ti -1c
+.RI "\fBDirectoryStruct\fP \fBdirectory\fP"
+.br
+.ti -1c
+.RI "\fBNodeStruct\fP * \fBnodes\fP [\fBMAX_NODES\fP]"
+.br
+.ti -1c
+.RI "int \fBnumFreeNodes\fP"
+.br
+.in -1c
+.SH "Field Documentation"
+.PP 
+.SS "\fBBIT\fP bitMap[\fBNUM_BITS\fP]"
+
+.SS "\fBDirectoryStruct\fP directory"
+
+.SS "int fdVirtualDisk"
+
+.SS "\fBNodeStruct\fP* nodes[\fBMAX_NODES\fP]"
+
+.SS "int numFreeNodes"
+
+.SS "\fBSuperBlockStruct\fP superBlock"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for FUSE_myFS from the source code\&.

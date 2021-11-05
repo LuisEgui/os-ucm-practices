@@ -1,0 +1,20 @@
+digraph "resizeNode"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="resizeNode",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Modifies the data size originally reserved by an inode, reserving or removing space if needed."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="readBlock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#aaedf9d572ec9f14cf4309d3689f68c2b",tooltip="Reads numBlock from storage into buffer."];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="updateBitmap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#ac7899d11630e97fd773d8c4a4bb6a234",tooltip="Writes all the information of the bitmap into the backup file."];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="updateNode",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a4b883c310e0116621ee5c38720cb9c20",tooltip="Writes all the information of an inode into the backup file."];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="findNodeByPos",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#ac7f7d46f16a740cc34ee97732a3c2ce0",tooltip="Computes the position (byte) of a given inode in the backup file."];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="updateSuperBlock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a43942168c8950c2229109ecb1f87bd68",tooltip="Writes all the information of the superblock in the backup file."];
+  Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="writeBlock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a24c90f2076988bfc4adcfa7a73701e7d",tooltip="Writes buffer data into numBlock storage block."];
+}

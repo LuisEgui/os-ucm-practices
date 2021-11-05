@@ -1,0 +1,107 @@
+.TH "src/fuseLib.c" 3 "Fri Nov 5 2021" "Version 1.0" "FUSE_myFS" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/fuseLib.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'fuseLib\&.h'\fP
+.br
+\fC#include 'myFS\&.h'\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include <inttypes\&.h>\fP
+.br
+\fC#include <linux/kdev_t\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBresizeNode\fP (uint64_t idxNode, size_t newSize)"
+.br
+.RI "Modifies the data size originally reserved by an inode, reserving or removing space if needed\&. "
+.ti -1c
+.RI "void \fBmode_string\fP (mode_t mode, char *str)"
+.br
+.RI "It formats the access mode of a file so it is compatible on screen, when it is printed\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct fuse_operations \fBmyFS_operations\fP"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void mode_string (mode_t mode, char * str)"
+
+.PP
+It formats the access mode of a file so it is compatible on screen, when it is printed\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImode\fP mode 
+.br
+\fIstr\fP output with the access mode in string format 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void 
+.RE
+.PP
+
+.SS "int resizeNode (uint64_t idxNode, size_t newSize)"
+
+.PP
+Modifies the data size originally reserved by an inode, reserving or removing space if needed\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIidxNode\fP inode number 
+.br
+\fInewSize\fP new size for the inode 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 
+.RE
+.PP
+
+.SH "Variable Documentation"
+.PP 
+.SS "struct fuse_operations myFS_operations"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    \&.getattr = my_getattr,                   
+    \&.readdir = my_readdir,                   
+    \&.truncate    = my_truncate,                  
+    \&.open        = my_open,                      
+    \&.write       = my_write,                     
+    \&.release = my_release,                   
+    \&.mknod       = my_mknod,                     
+    \&.unlink     = my_unlink,                    
+    \&.read       = my_read                      
+}
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for FUSE_myFS from the source code\&.

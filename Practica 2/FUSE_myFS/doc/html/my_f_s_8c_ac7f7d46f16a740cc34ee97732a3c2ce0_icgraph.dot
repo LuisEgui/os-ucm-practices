@@ -1,0 +1,21 @@
+digraph "findNodeByPos"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="findNodeByPos",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Computes the position (byte) of a given inode in the backup file."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="readNode",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a352c4e7c2fb4b77d575fb5c973facebf",tooltip="Reads an inode from the backup file."];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="initializeNodes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a4a09fe4cf4a69374029484d028f2966e",tooltip="It reads the inodes from disk and store them in new structures myFileSystem->nodes[i]."];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="myMkfs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#abec067f366fe2fae1a42695546914bd7",tooltip="Formats the current disk. Saves all the bitmap, super block and the directory."];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_my_file_system_8c.html#a3c04138a5bfe5d72780bb7e82a18e627",tooltip=" "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="updateNode",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$my_f_s_8c.html#a4b883c310e0116621ee5c38720cb9c20",tooltip="Writes all the information of an inode into the backup file."];
+  Node6 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="resizeNode",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$fuse_lib_8c.html#a843c835f592322d0dc24333633f96442",tooltip="Modifies the data size originally reserved by an inode, reserving or removing space if needed."];
+}
