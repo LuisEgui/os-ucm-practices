@@ -1,0 +1,16 @@
+ Parent. pid=10748 ppid=7645. i=0 a=1 b=1 *p=1
+	 Child. pid=10749 ppid=10748. i=0 a=2 b=2 *p=2
+ Parent. pid=10748 ppid=7645. i=1 a=2 b=2 *p=2
+	 Parent. pid=10749 ppid=10748. i=1 a=3 b=3 *p=3
+	 Child. pid=10750 ppid=10748. i=1 a=3 b=3 *p=3
+
+	 
+ Parent. pid=10748 ppid=7645. i=2 a=3 b=3 *p=3
+	 Parent. pid=10749 ppid=10748. i=2 a=4 b=4 *p=4
+		 Child. pid=10751 ppid=10749. i=1 a=4 b=4 *p=4
+		 Child. pid=10753 ppid=10749. i=2 a=5 b=5 *p=5
+	 Parent. pid=10750 ppid=10748. i=2 a=4 b=4 *p=4
+	 Child. pid=10752 ppid=10748. i=2 a=4 b=4 *p=4
+		 Child. pid=10754 ppid=10750. i=2 a=5 b=5 *p=5
+		 Parent. pid=10751 ppid=10749. i=2 a=5 b=5 *p=5
+			 Child. pid=10755 ppid=10751. i=2 a=6 b=6 *p=6
