@@ -38,9 +38,14 @@ void toSleep(int i)
 	printf("Philosopher %d is awake!!! \n", i);
 }
 
-void pickup(int right, int left) {
-    pthread_mutex_lock(&forks[right]);
-    pthread_mutex_lock(&forks[left]);
+void pickup(int id_philosopher, int right, int left) {
+	if(id_philosopher == NR_PHILOSOPHERS-1) {
+		pthread_mutex_lock(&forks[left]);
+    	pthread_mutex_lock(&forks[right]);
+	} else {
+		pthread_mutex_lock(&forks[right]);
+    	pthread_mutex_lock(&forks[left]);
+	}
 }
 
 void putdown(int right, int left) {
@@ -59,7 +64,7 @@ void *philosopher(void *i)
 
 		think(nPhilosopher);
 
-		pickup(right, left);
+		pickup(nPhilosopher, right, left);
 
 		eat(nPhilosopher);
 
