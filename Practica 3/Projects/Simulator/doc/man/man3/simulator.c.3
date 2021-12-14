@@ -1,0 +1,299 @@
+.TH "simulator.c" 3 "Tue Dec 14 2021" "Version 1.0.0" "bus-simulator" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+simulator.c
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stddef\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <pthread\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <signal\&.h>\fP
+.br
+\fC#include <fcntl\&.h>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBN_PARADAS\fP   5"
+.br
+.ti -1c
+.RI "#define \fBEN_RUTA\fP   0"
+.br
+.ti -1c
+.RI "#define \fBEN_PARADA\fP   1"
+.br
+.ti -1c
+.RI "#define \fBMAX_USUARIOS\fP   40"
+.br
+.ti -1c
+.RI "#define \fBUSUARIOS\fP   10"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBcondicion_salir\fP ()"
+.br
+.RI "Indica si el autobús está en condición de salir de la parada actual\&. "
+.ti -1c
+.RI "int \fBcondicion_espera\fP ()"
+.br
+.RI "Indica si el autobús está en condición de esperar en la parada actual\&. "
+.ti -1c
+.RI "void \fBAutobus_En_Parada\fP ()"
+.br
+.RI "Ajusta el estado de la parada y bloquea al autobús hasta que no haya pasajeros que quieran bajar y/o subir a la parada actual\&. Después se pone en marcha\&. "
+.ti -1c
+.RI "void \fBConducir_Hasta_Siguiente_Parada\fP ()"
+.br
+.RI "Establece un retardo aleatorio que simula el trayecto y actualiza el número de parada\&. "
+.ti -1c
+.RI "void \fBSubir_Autobus\fP (int id_usuario, int origen)"
+.br
+.RI "El usuario indicará que quiere subir en la parada 'origen', esparará a que el autobús se pare en dicha parada y subirá\&. El id_usuario puede utilizarse para proporcionar información de depuración\&. "
+.ti -1c
+.RI "void \fBBajar_Autobus\fP (int id_usuario, int destino)"
+.br
+.RI "El usuario indicará que quiere subir en la parada 'destino', esparará a que el autobús se pare en dicha parada y bajará\&. El id_usuario puede utilizarse para proporcionar información de depuración\&. "
+.ti -1c
+.RI "void * \fBthread_autobus\fP (void *arg)"
+.br
+.RI "Hilo del autobús\&. Simula el comportamiento de un autobús: espera en la parada, conduce hasta la siguiente\&. "
+.ti -1c
+.RI "void \fBUsuario\fP (int id_usuario, int origen, int destino)"
+.br
+.RI "Simula la acción del usuario: subir y bajar del autobús\&. "
+.ti -1c
+.RI "void * \fBthread_usuario\fP (void *arg)"
+.br
+.RI "Hilo de usuario, identificado por un 'id_usuario', un 'origen' y un 'destino' determinados aleatoriamente\&. "
+.ti -1c
+.RI "void \fBsignal_handler\fP (int sig)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char *argv[])"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBestado\fP = \fBEN_RUTA\fP"
+.br
+.ti -1c
+.RI "int \fBparada_actual\fP = 0"
+.br
+.ti -1c
+.RI "int \fBn_ocupantes\fP = 0"
+.br
+.ti -1c
+.RI "int \fBesperando_subir\fP [\fBN_PARADAS\fP]"
+.br
+.ti -1c
+.RI "int \fBesperando_bajar\fP [\fBN_PARADAS\fP]"
+.br
+.ti -1c
+.RI "pthread_mutex_t \fBmutex\fP"
+.br
+.ti -1c
+.RI "pthread_cond_t \fBbusReady\fP"
+.br
+.ti -1c
+.RI "pthread_cond_t \fBuserWaiting\fP"
+.br
+.ti -1c
+.RI "pthread_t \fBusers\fP [\fBMAX_USUARIOS\fP]"
+.br
+.ti -1c
+.RI "pthread_t \fBbus\fP"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define EN_PARADA   1"
+
+.SS "#define EN_RUTA   0"
+
+.SS "#define MAX_USUARIOS   40"
+
+.SS "#define N_PARADAS   5"
+
+.SS "#define USUARIOS   10"
+
+.SH "Function Documentation"
+.PP 
+.SS "void Autobus_En_Parada ()"
+
+.PP
+Ajusta el estado de la parada y bloquea al autobús hasta que no haya pasajeros que quieran bajar y/o subir a la parada actual\&. Después se pone en marcha\&. 
+.PP
+\fBReturns\fP
+.RS 4
+void 
+.RE
+.PP
+
+.SS "void Bajar_Autobus (int id_usuario, int destino)"
+
+.PP
+El usuario indicará que quiere subir en la parada 'destino', esparará a que el autobús se pare en dicha parada y bajará\&. El id_usuario puede utilizarse para proporcionar información de depuración\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIid_usuario\fP identificador del usuario que quiere bajar 
+.br
+\fIdestino\fP Parada en la que el bajará 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void 
+.RE
+.PP
+
+.SS "int condicion_espera ()"
+
+.PP
+Indica si el autobús está en condición de esperar en la parada actual\&. 
+.PP
+\fBReturns\fP
+.RS 4
+int 
+.RE
+.PP
+
+.SS "int condicion_salir ()"
+
+.PP
+Indica si el autobús está en condición de salir de la parada actual\&. 
+.PP
+\fBReturns\fP
+.RS 4
+int 
+.RE
+.PP
+
+.SS "void Conducir_Hasta_Siguiente_Parada ()"
+
+.PP
+Establece un retardo aleatorio que simula el trayecto y actualiza el número de parada\&. 
+.PP
+\fBReturns\fP
+.RS 4
+void 
+.RE
+.PP
+
+.SS "int main (int argc, char * argv[])"
+
+.SS "void signal_handler (int sig)"
+
+.SS "void Subir_Autobus (int id_usuario, int origen)"
+
+.PP
+El usuario indicará que quiere subir en la parada 'origen', esparará a que el autobús se pare en dicha parada y subirá\&. El id_usuario puede utilizarse para proporcionar información de depuración\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIid_usuario\fP identificador del usuario que quiere subir 
+.br
+\fIorigen\fP Parada en la que el usuario está esperando para subir 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void 
+.RE
+.PP
+
+.SS "void* thread_autobus (void * arg)"
+
+.PP
+Hilo del autobús\&. Simula el comportamiento de un autobús: espera en la parada, conduce hasta la siguiente\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIarg\fP N/A\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void 
+.RE
+.PP
+Esperar a que los viajeros suban y bajen
+.PP
+Conducir hasta la siguiente parada
+.SS "void* thread_usuario (void * arg)"
+
+.PP
+Hilo de usuario, identificado por un 'id_usuario', un 'origen' y un 'destino' determinados aleatoriamente\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIarg\fP 'id' del usuario 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void 
+.RE
+.PP
+
+.SS "void Usuario (int id_usuario, int origen, int destino)"
+
+.PP
+Simula la acción del usuario: subir y bajar del autobús\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIid_usuario\fP Identificador del usuario 
+.br
+\fIorigen\fP Parada de origen 
+.br
+\fIdestino\fP Parada de destino 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void 
+.RE
+.PP
+
+.SH "Variable Documentation"
+.PP 
+.SS "pthread_t bus"
+
+.SS "pthread_cond_t busReady"
+
+.SS "int esperando_bajar[\fBN_PARADAS\fP]"
+
+.SS "int esperando_subir[\fBN_PARADAS\fP]"
+
+.SS "int estado = \fBEN_RUTA\fP"
+
+.SS "pthread_mutex_t mutex"
+
+.SS "int n_ocupantes = 0"
+
+.SS "int parada_actual = 0"
+
+.SS "pthread_t users[\fBMAX_USUARIOS\fP]"
+
+.SS "pthread_cond_t userWaiting"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for bus-simulator from the source code\&.
