@@ -92,9 +92,12 @@ void Conducir_Hasta_Siguiente_Parada()
 
 	fprintf(stdout, "Bus driving to next stop...\n");
 	estado = EN_RUTA;
-	sleep(random() % 2);
-	parada_actual = (parada_actual + 1) % N_PARADAS;
+    pthread_mutex_unlock(&mutex);
 
+	sleep(random() % 2);
+
+    pthread_mutex_lock(&mutex);
+	parada_actual = (parada_actual + 1) % N_PARADAS;
 	pthread_mutex_unlock(&mutex);
 }
 
@@ -117,7 +120,7 @@ void Subir_Autobus(int id_usuario, int origen)
 		id_usuario, origen);
 	esperando_subir[origen]++;
 
-	while (parada_actual != origen && estado == EN_PARADA)
+	while (parada_actual != origen || estado == EN_RUTA || n_ocupantes > MAX_USUARIOS)
 		pthread_cond_wait(&userWaiting, &mutex);
 
 	n_ocupantes++;
@@ -150,7 +153,7 @@ void Bajar_Autobus(int id_usuario, int destino)
 	fprintf(stdout, "User: [%d] waiting to get off the bus...\n",
 		id_usuario);
 
-	while (parada_actual != destino && estado == EN_PARADA)
+	while (parada_actual != destino || estado == EN_RUTA)
 		pthread_cond_wait(&userWaiting, &mutex);
 
 	n_ocupantes--;
